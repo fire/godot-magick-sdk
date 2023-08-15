@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg8j5hcbc5u8h"]
+
+[ext_resource type="Script" path="res://node_3d.gd" id="1_wjfbu"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_wjfbu")
+agent_id = "8bc6ac04-9203-4782-83a5-6b3e76b1020b"
