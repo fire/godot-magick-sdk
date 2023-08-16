@@ -4,4 +4,5 @@
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_wjfbu")
-agent_id = "8bc6ac04-9203-4782-83a5-6b3e76b1020b"
+agent_id = "ad447749-7acb-46f7-bfcc-234c148bf061"
+api_key = "6caa27300badfd1cfbd8439ffeaef70c"

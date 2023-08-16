@@ -4,6 +4,8 @@ class_name MagickClient
 
 const DEFAULT_BASE_URL = 'https://api.magickml.com/api'
 
+var start_time = 0
+
 @export
 var base_url: String = DEFAULT_BASE_URL
 @export
@@ -12,22 +14,50 @@ var agent_id: String
 var api_key: String
 
 func _ready() -> void:
-	client_get("""NTSB probing near miss between Southwest Airlines 737, Cessna jets on San Diego runway
-The incident is the latest in a string of close calls involving airliners on or near runways in recent months.
-File photo.
-File photo.(Lola Gomez / Staff Photographer)
+	client_get(
+		"""
+		
+Virtual Reality Startup HIKKY Raises 6.5 Billion Yen In Series A Funding Round
 
-By Bloomberg Wire
+Funding will go towards developing the open metaverse and international business expansion
 
-7:40 AM on Aug 14, 2023 CDT
+News provided by
+HIKKY Co., Ltd.
 
-U.S. authorities are investigating a near miss between a Southwest Airlines Co. plane and a Cessna business jet at San Diego International Airport last week.
+15 Nov, 2021, 01:40 ET
+Share this article
 
-The National Transportation Safety Board said Saturday it’s looking into the Aug. 11 runway incident, which injured no one and caused no damage. The incident happened when a Cessna 560X that was cleared to land on a runway nearly hit a Southwest Airlines Boeing 737 that was in line on the same runway, it said.
+TOKYO, Nov. 15, 2021 /PRNewswire/ -- Virtual reality (VR) startup and organizers of the largest VR event in the world HIKKY Co., Ltd. announced today that they have raised 6.5 billion yen ($57 million) in an initial stage of their Series A funding round. They are considering an additional funding stage this round and plan to maintain autonomy following this funding.
+HIKKY and NTT DOCOMO strive to change the world together by providing VR experiences that connect the real and virtual.
+HIKKY and NTT DOCOMO strive to change the world together by providing VR experiences that connect the real and virtual.
 
-The Federal Aviation Administration said in June that it would start mandatory monthly safety training sessions for air-traffic controllers across the U.S. after a spike in near misses.
+The capital raised will help expand HIKKY's virtual reality services both domestically and abroad, as well as to strengthen their organizational foundation. These services include the Vket series of VR events, the browser-based VR engine called Vket Cloud that runs on smartphones and computers and developing and operating an open metaverse using Vket Cloud. 
 
-In the first two months of the year, eight incidents involving airliners on or near runways were rated by the FAA as a serious risk of a collision or prompted the NTSB to open an investigation. That’s almost double the annual average for the previous five years.""")
+HIKKY advocates for an open metaverse where users can:
+
+	Interact with each other beyond the bounds of platforms
+	Communicate and explore in an open world format
+	Deploy original content on their own domains
+	Access VR easily from any device with no app needed
+
+"Here at HIKKY, we will accelerate our metaverse business with the help of communication infrastructure, research institutes, and global networks of NTT DOCOMO, INC. and NTT Group," said Yasushi Funakoshi, HIKKY's CEO. "We will continue to provide NTT DOCOMO with XR services, technologies, and content production as per our strengths. We are extremely grateful to all the creators who have supported us, as well as the visitors and companies who have taken part in Vket events."
+
+HIKKY develops its own proprietary VR engine called Vket Cloud, which is used to create metaverse content that users can access with a simple link click, without a dedicated computer or mobile application. It also supports multiplayer mode, and users can enjoy communicating with others in the same space with voice or text chat. 
+
+The startup also runs the largest event series in VR, called Vket. Thousands of artists, many international corporate sponsors, and millions of users visit these events. Vket has become a major player in the VR event space and has received awards, including the VR Awards' Marketing Grand Prize in 2020, Japan's XR Creative Awards' Overall Grand Prize in 2020, and two Guinness World Records in 2021.
+
+Media contact:
+
+Kelly Martin
+kelly@vrhikky.com
++81 (0) 3 6277 3906
+
+SOURCE HIKKY Co., Ltd.
+		
+"""
+		
+		
+	)
 
 func client_get(content: StringName) -> void:
 	var queryParameters: Dictionary = {
@@ -37,13 +67,13 @@ func client_get(content: StringName) -> void:
 	}
 	apiClient("", HTTPClient.METHOD_GET, queryParameters, PackedStringArray(), base_url)
 
-func apiClient(endpoint: String, method: HTTPClient.Method, parameters: Dictionary, headers: PackedStringArray, base_url: String) -> void:
+func apiClient(p_endpoint: String, p_method: HTTPClient.Method, p_parameters: Dictionary, p_headers: PackedStringArray, p_base_url: String) -> void:
 	var http_request: HTTPRequest = HTTPRequest.new()
 	self.add_child(http_request)
-	var url: String = base_url + endpoint
-	if parameters.size() > 0:
-		url += "?" + urlencode(parameters)
-	http_request.request(url, headers, method)
+	var url: String = p_base_url + p_endpoint
+	if p_parameters.size() > 0:
+		url += "?" + urlencode(p_parameters)
+	http_request.request(url, p_headers, p_method)
 	http_request.connect("request_completed", Callable(self, "_on_request_completed"))
 	
 func urlencode(parameters: Dictionary) -> String:
@@ -62,3 +92,5 @@ func _on_request_completed(_result, response_code, _headers, body):
 		print(json_result)
 	else:
 		print("Request failed with response code: ", response_code)
+	var end_time = Time.get_ticks_msec()
+	print("Time taken: ", end_time - start_time, "ms")
